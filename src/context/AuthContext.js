@@ -15,14 +15,26 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // API URL with fallback
-  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+  // --- FIX STARTS HERE ---
+  // 1. Get the base URL from env or fallback
+  let apiBase = process.env.REACT_APP_API_URL || 'https://backend-saarthi.onrender.com/api';
   
+  // 2. Safety Check: Ensure it DOES NOT end with a slash
+  if (apiBase.endsWith('/')) {
+    apiBase = apiBase.slice(0, -1);
+  }
+
+  // 3. Safety Check: Ensure it DOES end with /api
+  // If the user forgot to add /api in Vercel, we add it here manually.
+  const API_BASE_URL = apiBase.endsWith('/api') ? apiBase : `${apiBase}/api`;
+  // --- FIX ENDS HERE ---
+
   // Debug log to check env vars
   useEffect(() => {
     console.log('🔧 Environment check:', {
       NODE_ENV: process.env.NODE_ENV,
-      API_URL: process.env.REACT_APP_API_URL,
+      RAW_API_URL: process.env.REACT_APP_API_URL,
+      FINAL_API_URL: API_BASE_URL, // <--- Check this in console
       GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID ? '✅ Set' : '❌ Missing'
     });
   }, []);
@@ -35,7 +47,7 @@ export const AuthProvider = ({ children }) => {
   const checkAuthStatus = async () => {
     try {
       console.log('🔍 Checking auth status at:', `${API_BASE_URL}/auth/check`);
-      
+
       const response = await fetch(`${API_BASE_URL}/auth/check`, {
         method: 'GET',
         credentials: 'include',
@@ -46,8 +58,8 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
       console.log('🔍 Auth check response:', data);
-      
-      if (data.success && data.isAuthenticated) {
+
+      if (data.success && (data.isAuthenticated || data.user)) { // Improved check
         setUser(data.user);
         setIsAuthenticated(true);
         console.log('✅ User authenticated:', data.user.name);
@@ -68,16 +80,14 @@ export const AuthProvider = ({ children }) => {
   // Google login - redirect to backend
   const loginWithGoogle = () => {
     console.log('🚀 Starting Google login...');
-    
-    // Store current page to redirect back after login
+
     const currentPath = window.location.pathname;
     localStorage.setItem('redirectAfterLogin', currentPath);
-    
-    // Build Google OAuth URL
+
+    // This will now definitely be .../api/auth/google
     const googleAuthURL = `${API_BASE_URL}/auth/google`;
     console.log('🔗 Redirecting to:', googleAuthURL);
-    
-    // Redirect to backend Google OAuth
+
     window.location.href = googleAuthURL;
   };
 
@@ -85,7 +95,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       console.log('👋 Logging out...');
-      
+
       const response = await fetch(`${API_BASE_URL}/auth/logout`, {
         method: 'POST',
         credentials: 'include',
@@ -94,20 +104,14 @@ export const AuthProvider = ({ children }) => {
         }
       });
 
-      const data = await response.json();
-      console.log('👋 Logout response:', data);
-
       if (response.ok) {
         setUser(null);
         setIsAuthenticated(false);
         console.log('✅ Logged out successfully');
-        
-        // Redirect to home page
         window.location.href = '/';
       }
     } catch (error) {
       console.error('❌ Logout error:', error);
-      // Force logout on error
       setUser(null);
       setIsAuthenticated(false);
       window.location.href = '/';
@@ -118,19 +122,15 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const loginSuccess = urlParams.get('login');
-    
+
     if (loginSuccess === 'success') {
       console.log('🎉 Login successful! Refreshing auth status...');
-      
-      // Remove URL params
       window.history.replaceState({}, document.title, window.location.pathname);
-      
-      // Refresh auth status
+
       setTimeout(() => {
         checkAuthStatus();
       }, 1000);
-      
-      // Redirect to original page if stored
+
       const redirectPath = localStorage.getItem('redirectAfterLogin');
       if (redirectPath && redirectPath !== '/') {
         setTimeout(() => {
@@ -139,43 +139,14 @@ export const AuthProvider = ({ children }) => {
         }, 2000);
       }
     }
-    
-    // Handle login error
+
     const loginError = urlParams.get('error');
     if (loginError === 'auth_failed') {
       console.error('❌ Google authentication failed');
       alert('Google login failed. Please try again.');
-      
-      // Remove URL params
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
-
-  // Track user interactions (optional)
-  const trackInteraction = async (action, details = {}) => {
-    if (!isAuthenticated) return;
-    
-    try {
-      await fetch(`${API_BASE_URL}/interactions`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          action,
-          details: {
-            ...details,
-            timestamp: new Date().toISOString(),
-            url: window.location.href
-          }
-        })
-      });
-    } catch (error) {
-      // Silently fail for analytics
-      console.warn('📊 Track interaction failed:', error);
-    }
-  };
 
   const value = {
     user,
@@ -183,7 +154,6 @@ export const AuthProvider = ({ children }) => {
     loading,
     loginWithGoogle,
     logout,
-    trackInteraction,
     checkAuthStatus
   };
 
