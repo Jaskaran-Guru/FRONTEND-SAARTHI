@@ -84,19 +84,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Google login - redirect to backend
-  const loginWithGoogle = () => {
-    console.log('🚀 Initiating Google Login...');
+   const loginWithGoogle = () => {
+    console.log('🚀 Starting Google login...');
 
     const currentPath = window.location.pathname;
     localStorage.setItem('redirectAfterLogin', currentPath);
 
-    // Ensure correct redirect URL
-    const googleAuthURL = `${API_BASE_URL}/auth/google`;
+    // FIX: Hardcoded URL with /api to ensure it works
+    const googleAuthURL = "https://backend-saarthi.onrender.com/api/auth/google";
+    
     console.log('🔗 Redirecting to:', googleAuthURL);
-
     window.location.href = googleAuthURL;
   };
-
+  
   // Logout function
   const logout = async () => {
     try {
