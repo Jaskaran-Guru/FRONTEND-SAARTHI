@@ -15,27 +15,28 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // --- FIX STARTS HERE ---
-  // 1. Get the base URL from env or fallback
-  let apiBase = process.env.REACT_APP_API_URL || 'https://backend-saarthi.onrender.com/api';
+  // ==========================================
+  // 1. ROBUST API URL CONFIGURATION (THE FIX)
+  // ==========================================
   
-  // 2. Safety Check: Ensure it DOES NOT end with a slash
-  if (apiBase.endsWith('/')) {
-    apiBase = apiBase.slice(0, -1);
-  }
+  // Base domain (without /api)
+  const rawBase = process.env.REACT_APP_API_URL || 'https://backend-saarthi.onrender.com';
+  
+  // Clean it: remove trailing slash and remove /api if user added it manually
+  // We will append /api consistently later
+  const cleanBase = rawBase.replace(/\/$/, '').replace(/\/api$/, '');
+  
+  // Final API URL always ends with /api
+  const API_BASE_URL = `${cleanBase}/api`;
 
-  // 3. Safety Check: Ensure it DOES end with /api
-  // If the user forgot to add /api in Vercel, we add it here manually.
-  const API_BASE_URL = apiBase.endsWith('/api') ? apiBase : `${apiBase}/api`;
-  // --- FIX ENDS HERE ---
-
-  // Debug log to check env vars
+  // ==========================================
+  // DEBUGGING LOGS
+  // ==========================================
   useEffect(() => {
-    console.log('🔧 Environment check:', {
-      NODE_ENV: process.env.NODE_ENV,
-      RAW_API_URL: process.env.REACT_APP_API_URL,
-      FINAL_API_URL: API_BASE_URL, // <--- Check this in console
-      GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID ? '✅ Set' : '❌ Missing'
+    console.log('🔧 Auth Configuration:', {
+      raw_env: process.env.REACT_APP_API_URL,
+      final_url: API_BASE_URL, // Should be ...onrender.com/api
+      is_production: process.env.NODE_ENV === 'production'
     });
   }, []);
 
@@ -46,30 +47,35 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      console.log('🔍 Checking auth status at:', `${API_BASE_URL}/auth/check`);
+      // console.log('🔍 Checking auth status...'); 
+      // (Commented out to reduce console noise)
 
       const response = await fetch(`${API_BASE_URL}/auth/check`, {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include', // Crucial for cookie transmission
         headers: {
           'Content-Type': 'application/json',
         }
       });
 
-      const data = await response.json();
-      console.log('🔍 Auth check response:', data);
+      // Handle non-JSON responses (like 404 HTML pages)
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Received non-JSON response from server (Check API URL)");
+      }
 
-      if (data.success && (data.isAuthenticated || data.user)) { // Improved check
+      const data = await response.json();
+
+      if (data.success && (data.isAuthenticated || data.user)) {
         setUser(data.user);
         setIsAuthenticated(true);
         console.log('✅ User authenticated:', data.user.name);
       } else {
         setUser(null);
         setIsAuthenticated(false);
-        console.log('❌ User not authenticated');
       }
     } catch (error) {
-      console.error('❌ Auth check error:', error);
+      console.error('❌ Auth Check Failed:', error.message);
       setUser(null);
       setIsAuthenticated(false);
     } finally {
@@ -79,12 +85,12 @@ export const AuthProvider = ({ children }) => {
 
   // Google login - redirect to backend
   const loginWithGoogle = () => {
-    console.log('🚀 Starting Google login...');
+    console.log('🚀 Initiating Google Login...');
 
     const currentPath = window.location.pathname;
     localStorage.setItem('redirectAfterLogin', currentPath);
 
-    // This will now definitely be .../api/auth/google
+    // Ensure correct redirect URL
     const googleAuthURL = `${API_BASE_URL}/auth/google`;
     console.log('🔗 Redirecting to:', googleAuthURL);
 
@@ -107,11 +113,12 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         setUser(null);
         setIsAuthenticated(false);
-        console.log('✅ Logged out successfully');
-        window.location.href = '/';
+        // Force reload to clear any client-side state
+        window.location.href = '/'; 
       }
     } catch (error) {
       console.error('❌ Logout error:', error);
+      // Fallback: Clear local state anyway
       setUser(null);
       setIsAuthenticated(false);
       window.location.href = '/';
@@ -124,26 +131,26 @@ export const AuthProvider = ({ children }) => {
     const loginSuccess = urlParams.get('login');
 
     if (loginSuccess === 'success') {
-      console.log('🎉 Login successful! Refreshing auth status...');
+      console.log('🎉 Login Success Signal Received!');
+      
+      // Clean URL
       window.history.replaceState({}, document.title, window.location.pathname);
 
-      setTimeout(() => {
-        checkAuthStatus();
-      }, 1000);
+      // Verify session immediately
+      checkAuthStatus();
 
+      // Redirect back if needed
       const redirectPath = localStorage.getItem('redirectAfterLogin');
       if (redirectPath && redirectPath !== '/') {
-        setTimeout(() => {
-          window.location.href = redirectPath;
-          localStorage.removeItem('redirectAfterLogin');
-        }, 2000);
+        window.location.href = redirectPath;
+        localStorage.removeItem('redirectAfterLogin');
       }
     }
 
     const loginError = urlParams.get('error');
-    if (loginError === 'auth_failed') {
-      console.error('❌ Google authentication failed');
-      alert('Google login failed. Please try again.');
+    if (loginError) {
+      console.error('❌ Login Error Signal:', loginError);
+      alert('Login failed. Please try again.');
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
