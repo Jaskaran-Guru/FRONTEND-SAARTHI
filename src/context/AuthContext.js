@@ -91,12 +91,12 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('redirectAfterLogin', currentPath);
 
     // FIX: Hardcoded URL with /api to ensure it works
-    const googleAuthURL = "https://backend-saarthi.onrender.com/api/auth/google";
+    const googleAuthURL = "https://backend-saarthi.onrender.com/api/auth/google/callback";
     
     console.log('🔗 Redirecting to:', googleAuthURL);
     window.location.href = googleAuthURL;
   };
-  
+
   // Logout function
   const logout = async () => {
     try {
