@@ -31,7 +31,7 @@ const FavoriteButton = ({ propertyId, className = "", size = "normal" }) => {
       propertyId
     });
     
-    // Remove animation class after animation completes
+    
     setTimeout(() => setIsAnimating(false), 300);
   };
 

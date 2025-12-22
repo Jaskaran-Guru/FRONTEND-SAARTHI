@@ -8,7 +8,7 @@ const LoginModal = ({ isOpen, onClose }) => {
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
-      // This will redirect to backend
+      
       loginWithGoogle();
     } catch (error) {
       console.error('Google login error:', error);
@@ -64,7 +64,7 @@ const LoginModal = ({ isOpen, onClose }) => {
             </p>
           </div>
 
-          {/* Benefits */}
+         
           <div className="mt-8 pt-6 border-t border-gray-200">
             <p className="text-sm text-gray-600 mb-4 text-center">Why create an account?</p>
             <div className="space-y-2">

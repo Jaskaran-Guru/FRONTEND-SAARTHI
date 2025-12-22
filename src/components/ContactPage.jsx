@@ -10,12 +10,12 @@ const ContactPage = () => {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  // Hardcoded API URL
+  
   const API_BASE_URL = 'https://backend-saarthi.onrender.com/api';
 
   const handleInputChange = (e) => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
-  // --- REAL SUBMIT FUNCTION ---
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

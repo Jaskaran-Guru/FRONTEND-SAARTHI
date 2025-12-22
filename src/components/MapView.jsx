@@ -6,7 +6,7 @@ const MapView = ({ properties, selectedProperty, onPropertySelect }) => {
   const [zoom, setZoom] = useState(6);
   const [hoveredProperty, setHoveredProperty] = useState(null);
 
-  // City coordinates for Indian cities
+  
   const cityCoordinates = {
     'Mumbai': { lat: 19.0760, lng: 72.8777 },
     'Delhi': { lat: 28.6139, lng: 77.2090 },
@@ -59,7 +59,7 @@ const MapView = ({ properties, selectedProperty, onPropertySelect }) => {
     properties.forEach((property, index) => {
       const cityCoord = cityCoordinates[property.location];
       if (cityCoord) {
-        // Create slight offsets for multiple properties in same city
+        
         if (!cityOffsets[property.location]) {
           cityOffsets[property.location] = 0;
         }
@@ -133,7 +133,7 @@ const MapView = ({ properties, selectedProperty, onPropertySelect }) => {
           </div>
         </div>
 
-        {/* India Outline (Simplified) */}
+        
         <div className="absolute inset-0">
           <svg className="w-full h-full" viewBox="0 0 800 500">
             <path
@@ -145,7 +145,7 @@ const MapView = ({ properties, selectedProperty, onPropertySelect }) => {
           </svg>
         </div>
 
-        {/* City Markers */}
+        
         {Object.entries(cityStats).map(([city, stats]) => {
           const coord = cityCoordinates[city];
           if (!coord) return null;
@@ -173,7 +173,7 @@ const MapView = ({ properties, selectedProperty, onPropertySelect }) => {
                   </div>
                 </div>
                 
-                {/* City Info Popup */}
+                
                 <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-all z-20">
                   <div className="bg-white rounded-lg shadow-xl p-3 min-w-32 border">
                     <div className="text-xs font-semibold text-gray-900 mb-1">{city}</div>
@@ -189,7 +189,7 @@ const MapView = ({ properties, selectedProperty, onPropertySelect }) => {
           );
         })}
 
-        {/* Individual Property Markers */}
+        
         {properties.map((property) => {
           const position = propertyPositions[property.id];
           if (!position) return null;
@@ -235,7 +235,7 @@ const MapView = ({ properties, selectedProperty, onPropertySelect }) => {
                   </div>
                 </div>
                 
-                {/* Property Info Popup */}
+                
                 <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 transition-all ${
                   isSelected || isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
                 }`}>
@@ -274,7 +274,7 @@ const MapView = ({ properties, selectedProperty, onPropertySelect }) => {
           );
         })}
 
-        {/* Map Controls */}
+       
         <div className="absolute top-4 right-4 flex flex-col gap-2 z-20">
           <button
             onClick={() => {
@@ -296,7 +296,7 @@ const MapView = ({ properties, selectedProperty, onPropertySelect }) => {
           </button>
         </div>
 
-        {/* Legend */}
+        
         <div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-lg p-4 z-20 max-w-xs">
           <div className="text-xs font-semibold text-gray-900 mb-3">Map Legend</div>
           <div className="space-y-2 text-xs">
@@ -319,7 +319,7 @@ const MapView = ({ properties, selectedProperty, onPropertySelect }) => {
           </div>
         </div>
 
-        {/* Property Count by City */}
+       
         <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 z-20 max-w-xs">
           <div className="text-xs font-semibold text-gray-900 mb-3">Properties by City</div>
           <div className="space-y-1 text-xs max-h-32 overflow-y-auto">
@@ -343,7 +343,7 @@ const MapView = ({ properties, selectedProperty, onPropertySelect }) => {
           </div>
         </div>
 
-        {/* Map Attribution */}
+        
         <div className="absolute bottom-4 right-4 text-xs text-gray-600 bg-white/80 px-2 py-1 rounded backdrop-blur-sm">
           Interactive Map • Zoom: {zoom}x • {properties.length} Properties
         </div>

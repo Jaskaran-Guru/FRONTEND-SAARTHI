@@ -31,7 +31,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white">
-      {/* Navigation */}
+      
       <nav className="bg-transparent py-6 px-8 border-b border-gray-200">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-3">
@@ -72,7 +72,7 @@ const HomePage = () => {
             </Link>
           </div>
           
-          {/* Auth Section */}
+         
           {isAuthenticated ? (
             <div className="relative">
               <button
@@ -143,7 +143,7 @@ const HomePage = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      
       <section className="container mx-auto px-8 py-16 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
@@ -198,7 +198,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+      
       <section className="bg-white py-16">
         <div className="container mx-auto px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
@@ -237,7 +237,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Achievements Section */}
+      
       <section className="relative overflow-hidden">
         <div className="grid lg:grid-cols-5 min-h-[400px]">
           <div className="lg:col-span-3 bg-teal-600 text-white p-12 flex flex-col justify-center">
@@ -277,7 +277,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Property Listings Section */}
+     
       <section className="bg-green-50 py-20">
         <div className="container mx-auto px-8">
           <div className="mb-12">
@@ -322,7 +322,7 @@ const HomePage = () => {
               </div>
             </div>
 
-            {/* Add more featured properties similarly */}
+           
             <div className="property-card group">
               <Link to="/property/2" className="relative block">
                 <img 
@@ -357,7 +357,7 @@ const HomePage = () => {
               </div>
             </div>
 
-            {/* Continue with more properties */}
+            
             <div className="property-card group">
               <Link to="/property/3" className="relative block">
                 <img 
@@ -429,7 +429,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+     
       <section className="bg-primary-600 py-20">
         <div className="container mx-auto px-8 text-center">
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-8">Ready to Find Your Dream Home in India?</h2>
@@ -449,7 +449,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Login Modal */}
+     
       <LoginModal 
         isOpen={showLoginModal} 
         onClose={() => setShowLoginModal(false)} 

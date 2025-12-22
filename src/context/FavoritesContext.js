@@ -13,7 +13,7 @@ export const useFavorites = () => {
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
 
-  // Load favorites from localStorage on mount
+  
   useEffect(() => {
     const saved = localStorage.getItem('saarthi-favorites');
     if (saved) {
@@ -26,7 +26,7 @@ export const FavoritesProvider = ({ children }) => {
     }
   }, []);
 
-  // Save to localStorage whenever favorites change
+  
   useEffect(() => {
     localStorage.setItem('saarthi-favorites', JSON.stringify(favorites));
   }, [favorites]);

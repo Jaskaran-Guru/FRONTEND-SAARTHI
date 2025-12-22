@@ -14,7 +14,7 @@ const FavoritesPage = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [sortBy, setSortBy] = useState('recent');
 
-  // Enhanced properties data (same as ListingPage)
+  
   const allProperties = [
     {
       id: 1,
@@ -78,12 +78,12 @@ const FavoritesPage = () => {
     }
   ];
 
-  // Filter properties to show only favorites
+  
   const favoriteProperties = allProperties.filter(property => 
     favorites.includes(property.id)
   );
 
-  // Sort properties
+  
   const sortedProperties = [...favoriteProperties].sort((a, b) => {
     switch (sortBy) {
       case 'recent':
@@ -152,7 +152,7 @@ const FavoritesPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white">
-      {/* Navigation */}
+     
       <nav className="bg-transparent py-6 px-8 border-b border-gray-200">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-3">
@@ -185,7 +185,6 @@ const FavoritesPage = () => {
         </div>
       </nav>
 
-      {/* Header Section */}
       <div className="container mx-auto px-8 py-16">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -197,7 +196,7 @@ const FavoritesPage = () => {
         </div>
 
         {favoriteProperties.length === 0 ? (
-          /* Empty State */
+         
           <div className="text-center py-16">
             <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-8">
               <span className="text-6xl">💔</span>
@@ -220,9 +219,9 @@ const FavoritesPage = () => {
             </div>
           </div>
         ) : (
-          /* Properties List */
+        
           <>
-            {/* Controls */}
+           
             <div className="flex justify-between items-center mb-8">
               <div className="flex items-center gap-4">
                 <span className="text-gray-600">Sort by:</span>
@@ -253,7 +252,7 @@ const FavoritesPage = () => {
               </div>
             </div>
 
-            {/* Properties Grid */}
+            
             <div className="property-grid">
               {sortedProperties.map((property) => (
                 <div key={property.id} className="property-card group">
@@ -294,7 +293,7 @@ const FavoritesPage = () => {
                     
                     <h3 className="font-bold text-xl mb-2">{property.title}</h3>
                     
-                    {/* Property Type & Furnishing */}
+                   
                     <div className="flex gap-2 mb-4">
                       <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full capitalize">
                         {property.propertyType}
@@ -316,7 +315,7 @@ const FavoritesPage = () => {
                       </span>
                     </div>
 
-                    {/* Amenities Preview */}
+                 
                     {property.amenities && property.amenities.length > 0 && (
                       <div className="mb-4">
                         <div className="flex flex-wrap gap-1">
@@ -336,12 +335,12 @@ const FavoritesPage = () => {
                       {property.description}
                     </p>
 
-                    {/* Added Date */}
+                    
                     <div className="text-xs text-gray-500 mb-4">
                       Added to favorites on {property.addedToFavorites.toLocaleDateString()}
                     </div>
                     
-                    {/* Action Buttons */}
+                  
                     <div className="flex gap-2">
                       <Link to={`/property/${property.id}`} className="flex-1">
                         <button className="btn-primary w-full">
@@ -361,7 +360,7 @@ const FavoritesPage = () => {
               ))}
             </div>
 
-            {/* Summary Card */}
+           
             <div className="mt-12 bg-white rounded-2xl shadow-xl p-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Your Favorites Summary</h3>
               
@@ -399,7 +398,7 @@ const FavoritesPage = () => {
         )}
       </div>
 
-      {/* Modals */}
+      
       <EMICalculator
         isOpen={showEMI}
         onClose={() => setShowEMI(false)}

@@ -8,7 +8,7 @@ import EMICalculator from './EMICalculator';
 import MapView from './MapView';
 
 const ListingPage = () => {
-  // Complete Enhanced property data with all details
+  
   const allProperties = [
     {
       id: 1,
@@ -187,7 +187,7 @@ const ListingPage = () => {
   const { user, isAuthenticated, logout, trackInteraction } = useAuth();
   const { getFavoritesCount } = useFavorites();
 
-  // Advanced filters state
+  
   const [filters, setFilters] = useState({
     searchQuery: '',
     location: '',
@@ -226,7 +226,7 @@ const ListingPage = () => {
     }));
   };
 
-  // Search and filter logic
+  
   useEffect(() => {
     let filtered = [...allProperties];
 
@@ -239,28 +239,28 @@ const ListingPage = () => {
       );
     }
 
-    // Location filter
+    
     if (filters.location) {
       filtered = filtered.filter(property =>
         property.location.toLowerCase() === filters.location.toLowerCase()
       );
     }
 
-    // Property type filter
+    
     if (filters.propertyType) {
       filtered = filtered.filter(property =>
         property.propertyType === filters.propertyType
       );
     }
 
-    // BHK filter
+    
     if (filters.bhk) {
       filtered = filtered.filter(property =>
         property.bedrooms >= parseInt(filters.bhk)
       );
     }
 
-    // Price filter (convert crores to rupees)
+    
     if (filters.minPrice || filters.maxPrice) {
       filtered = filtered.filter(property => {
         const priceInCrores = property.price / 10000000;
@@ -270,7 +270,7 @@ const ListingPage = () => {
       });
     }
 
-    // Area filter
+    
     if (filters.areaMin || filters.areaMax) {
       filtered = filtered.filter(property => {
         const area = property.area;
@@ -280,21 +280,21 @@ const ListingPage = () => {
       });
     }
 
-    // Possession filter
+    
     if (filters.possession) {
       filtered = filtered.filter(property =>
         property.possession === filters.possession
       );
     }
 
-    // Furnishing filter
+    
     if (filters.furnishing) {
       filtered = filtered.filter(property =>
         property.furnishing === filters.furnishing
       );
     }
 
-    // Amenities filter
+    
     if (filters.amenities.length > 0) {
       filtered = filtered.filter(property =>
         filters.amenities.some(amenity =>
@@ -303,13 +303,13 @@ const ListingPage = () => {
       );
     }
 
-    // Apply sorting
+    
     filtered = applySorting(filtered, sortBy);
 
     setFilteredProperties(filtered);
   }, [filters, sortBy]);
 
-  // Sorting function
+  
   const applySorting = (propertyList, sortOption) => {
     const sorted = [...propertyList];
     
@@ -331,7 +331,7 @@ const ListingPage = () => {
     }
   };
 
-  // Clear all filters
+  
   const clearAllFilters = () => {
     setFilters({
       searchQuery: '',
@@ -349,7 +349,7 @@ const ListingPage = () => {
     setSortBy('relevance');
   };
 
-  // Format price
+ 
   const formatPrice = (price) => {
     if (price >= 10000000) {
       return `₹${(price / 10000000).toFixed(1)}Cr`;
@@ -404,7 +404,7 @@ const ListingPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white">
-      {/* Navigation */}
+      
       <nav className="bg-transparent py-6 px-8 border-b border-gray-200">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-3">
@@ -444,7 +444,7 @@ const ListingPage = () => {
             </Link>
           </div>
           
-          {/* Auth Section */}
+          
           {isAuthenticated ? (
             <div className="flex items-center gap-4">
               <Link to="/favorites" className="relative">
@@ -528,10 +528,10 @@ const ListingPage = () => {
         </div>
       </nav>
 
-      {/* Advanced Search Section */}
+      
       <section className="bg-green-50 py-16">
         <div className="container mx-auto px-8">
-          {/* Page Header */}
+       
           <div className="text-center mb-12">
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               Premium Properties Across India
@@ -540,7 +540,7 @@ const ListingPage = () => {
               Find your perfect home with our advanced search filters
             </p>
             
-            {/* View Toggle */}
+            
             <div className="flex justify-center gap-4 mt-8">
               <button
                 onClick={() => setShowMap(false)}
@@ -561,11 +561,11 @@ const ListingPage = () => {
             </div>
           </div>
 
-          {/* Advanced Search Component */}
+          
           <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-            {/* Basic Search Row */}
+          
             <div className="grid md:grid-cols-5 gap-4 mb-6">
-              {/* Search Input */}
+           
               <div className="relative">
                 <input
                   type="text"
@@ -576,7 +576,7 @@ const ListingPage = () => {
                 />
               </div>
 
-              {/* City Dropdown */}
+              
               <select
                 value={filters.location}
                 onChange={(e) => handleFilterChange('location', e.target.value)}
@@ -588,7 +588,7 @@ const ListingPage = () => {
                 ))}
               </select>
 
-              {/* Property Type */}
+             
               <select
                 value={filters.propertyType}
                 onChange={(e) => handleFilterChange('propertyType', e.target.value)}
@@ -601,7 +601,7 @@ const ListingPage = () => {
                 <option value="plot">Plot/Land</option>
               </select>
 
-              {/* BHK */}
+              
               <select
                 value={filters.bhk}
                 onChange={(e) => handleFilterChange('bhk', e.target.value)}
@@ -614,7 +614,7 @@ const ListingPage = () => {
                 <option value="4">4+ BHK</option>
               </select>
 
-              {/* Budget Range */}
+              
               <select
                 onChange={(e) => {
                   const [min, max] = e.target.value.split('-');
@@ -632,7 +632,7 @@ const ListingPage = () => {
               </select>
             </div>
 
-            {/* Advanced Filters Toggle */}
+            
             <div className="flex justify-between items-center">
               <button
                 onClick={() => setShowAdvanced(!showAdvanced)}
@@ -650,7 +650,7 @@ const ListingPage = () => {
               </button>
             </div>
 
-            {/* Advanced Filters Panel */}
+            
             {showAdvanced && (
               <div className="mt-6 space-y-6 border-t pt-6 animate-slideUp">
                 {/* Price Range */}
@@ -679,7 +679,7 @@ const ListingPage = () => {
                   </div>
                 </div>
 
-                {/* Area Range */}
+                
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Min Area (sq ft)</label>
@@ -703,7 +703,7 @@ const ListingPage = () => {
                   </div>
                 </div>
 
-                {/* Additional Filters */}
+               
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Possession Status</label>
@@ -734,7 +734,7 @@ const ListingPage = () => {
                   </div>
                 </div>
 
-                {/* Amenities Filter */}
+                
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-4">Select Amenities</label>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -755,7 +755,7 @@ const ListingPage = () => {
             )}
           </div>
 
-          {/* Quick Filter Buttons */}
+          
           <div className="flex flex-wrap gap-4 mb-8">
             <button 
               onClick={() => handleQuickFilter('location', 'Mumbai')}
@@ -789,7 +789,7 @@ const ListingPage = () => {
             </button>
           </div>
 
-          {/* Results Count & Sort */}
+          
           <div className="flex justify-between items-center mb-8">
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -818,7 +818,7 @@ const ListingPage = () => {
             </div>
           </div>
 
-          {/* Map or List View */}
+          
           {showMap ? (
             <MapView 
               properties={filteredProperties}
@@ -826,7 +826,7 @@ const ListingPage = () => {
               onPropertySelect={setSelectedProperty}
             />
           ) : (
-            /* Property Grid */
+            
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {filteredProperties.map((property) => (
                 <div key={property.id} className="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 group transform hover:-translate-y-2">
@@ -842,7 +842,7 @@ const ListingPage = () => {
                       className="absolute top-6 right-6"
                     />
                     
-                    {/* Property Badges */}
+                    
                     <div className="absolute top-6 left-6 flex flex-col gap-2">
                       <div className="bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
                         Premium
@@ -867,7 +867,7 @@ const ListingPage = () => {
                     
                     <h3 className="font-bold text-xl mb-2">{property.title}</h3>
                     
-                    {/* Property Type & Furnishing */}
+                    
                     <div className="flex gap-2 mb-4">
                       <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full capitalize">
                         {property.propertyType}
@@ -889,7 +889,7 @@ const ListingPage = () => {
                       </span>
                     </div>
 
-                    {/* Amenities Preview */}
+                   
                     {property.amenities && property.amenities.length > 0 && (
                       <div className="mb-4">
                         <div className="flex flex-wrap gap-1">
@@ -933,7 +933,7 @@ const ListingPage = () => {
             </div>
           )}
 
-          {/* No Results */}
+         
           {filteredProperties.length === 0 && (
             <div className="text-center py-16">
               <div className="text-6xl mb-4">🏠</div>
@@ -953,12 +953,12 @@ const ListingPage = () => {
             </div>
           )}
 
-          {/* Load More Button */}
+        
           
         </div>
       </section>
 
-      {/* City Statistics Section */}
+      
       <section className="bg-white py-16">
         <div className="container mx-auto px-8">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Popular Cities for Investment</h2>
@@ -983,7 +983,7 @@ const ListingPage = () => {
         </div>
       </section>
 
-      {/* Modals */}
+      
       <EMICalculator
         isOpen={showEMI}
         onClose={() => setShowEMI(false)}

@@ -27,7 +27,7 @@ const PropertyDetailPage = () => {
     interestedIn: 'site-visit'
   });
 
-  // Complete Enhanced property data with all properties
+ 
   const allProperties = [
     {
       id: 1,
@@ -482,7 +482,7 @@ const PropertyDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
+     
       <nav className="bg-white py-4 px-8 border-b border-gray-200 sticky top-0 z-40">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-4">
@@ -588,9 +588,9 @@ const PropertyDetailPage = () => {
 
       <div className="container mx-auto px-8 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Content */}
+        
           <div className="lg:col-span-2 space-y-8">
-            {/* Image Gallery */}
+            
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <div className="relative">
                 <img
@@ -599,7 +599,7 @@ const PropertyDetailPage = () => {
                   className="w-full h-96 object-cover"
                 />
                 
-                {/* Image Navigation */}
+                
                 {property.images.length > 1 && (
                   <>
                     <button
@@ -621,7 +621,7 @@ const PropertyDetailPage = () => {
                   </>
                 )}
                 
-                {/* Image Indicators */}
+                
                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
                   {property.images.map((_, index) => (
                     <button
@@ -634,13 +634,13 @@ const PropertyDetailPage = () => {
                   ))}
                 </div>
 
-                {/* Image Counter */}
+                
                 <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
                   {currentImageIndex + 1} / {property.images.length}
                 </div>
               </div>
               
-              {/* Image Thumbnails */}
+             
               <div className="p-4">
                 <div className="flex gap-2 overflow-x-auto">
                   {property.images.map((image, index) => (
@@ -658,7 +658,7 @@ const PropertyDetailPage = () => {
               </div>
             </div>
 
-            {/* Property Details */}
+            
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <div className="flex justify-between items-start mb-6">
                 <div>
@@ -677,7 +677,7 @@ const PropertyDetailPage = () => {
                 </div>
               </div>
 
-              {/* Key Features Grid */}
+             
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 p-6 bg-gray-50 rounded-xl">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-gray-900">{property.bedrooms}</div>
@@ -697,7 +697,7 @@ const PropertyDetailPage = () => {
                 </div>
               </div>
 
-              {/* Property Info */}
+             
               <div className="grid md:grid-cols-3 gap-4 mb-8">
                 <div className="flex items-center gap-2">
                   <span className="text-gray-600">Type:</span>
@@ -725,7 +725,7 @@ const PropertyDetailPage = () => {
                 </div>
               </div>
 
-              {/* Description */}
+             
               <div className="mb-8">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">About This Property</h3>
                 <p className="text-gray-700 leading-relaxed">{property.description}</p>
@@ -744,7 +744,7 @@ const PropertyDetailPage = () => {
                 </div>
               </div>
 
-              {/* Amenities */}
+              
               <div className="mb-8">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Amenities</h3>
                 <div className="flex flex-wrap gap-3">
@@ -759,7 +759,7 @@ const PropertyDetailPage = () => {
                 </div>
               </div>
 
-              {/* Nearby Places */}
+              
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">What's Nearby</h3>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -777,9 +777,9 @@ const PropertyDetailPage = () => {
             </div>
           </div>
 
-          {/* Sidebar */}
+          
           <div className="space-y-6">
-            {/* Contact Agent */}
+            
             <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
               <div className="text-center mb-6">
                 <img
@@ -825,7 +825,7 @@ const PropertyDetailPage = () => {
               </div>
             </div>
 
-            {/* Quick Actions */}
+            
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-4">Quick Actions</h3>
               <div className="space-y-3">
@@ -848,7 +848,7 @@ const PropertyDetailPage = () => {
         </div>
       </div>
 
-      {/* Contact Form Modal */}
+      
       {showContactForm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl max-w-md w-full p-8">
@@ -934,7 +934,7 @@ const PropertyDetailPage = () => {
         </div>
       )}
 
-      {/* Modals */}
+      
       <EMICalculator
         isOpen={showEMI}
         onClose={() => setShowEMI(false)}

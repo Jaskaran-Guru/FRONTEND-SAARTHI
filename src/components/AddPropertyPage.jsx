@@ -60,7 +60,7 @@ const AddPropertyPage = () => {
 
     setPropertyData((prev) => ({
       ...prev,
-      // Limit to 4 images to avoid Payload Too Large error
+      
       images: [...prev.images, ...base64Images].slice(0, 4), 
     }));
   };
@@ -75,7 +75,7 @@ const AddPropertyPage = () => {
   const nextStep = () => { if (currentStep < 5) setCurrentStep((prev) => prev + 1); };
   const prevStep = () => { if (currentStep > 1) setCurrentStep((prev) => prev - 1); };
 
-  // --- REAL SUBMIT FUNCTION ---
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isAuthenticated) {

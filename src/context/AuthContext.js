@@ -15,17 +15,12 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // ==========================================
-  // 1. ROBUST API URL CONFIGURATION
-  // ==========================================
+ 
   
-  // Use Hardcoded Production URL to avoid any environment variable issues
-  // You can change this back to process.env later once everything works
+
   const API_BASE_URL = 'https://backend-saarthi.onrender.com/api';
 
-  // ==========================================
-  // CHECK AUTH STATUS
-  // ==========================================
+
   const checkAuthStatus = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/auth/check`, {
@@ -62,14 +57,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Run check on mount
+  
   useEffect(() => {
     checkAuthStatus();
   }, []);
 
-  // ==========================================
-  // GOOGLE LOGIN (THE FIX)
-  // ==========================================
+
   const loginWithGoogle = () => {
     console.log('🚀 Initiating Google Login...');
 
@@ -84,9 +77,7 @@ export const AuthProvider = ({ children }) => {
     window.location.href = googleAuthURL;
   };
 
-  // ==========================================
-  // LOGOUT
-  // ==========================================
+ 
   const logout = async () => {
     try {
       console.log('👋 Logging out...');
@@ -109,9 +100,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ==========================================
-  // HANDLE LOGIN SUCCESS FROM URL
-  // ==========================================
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const loginSuccess = urlParams.get('login');
@@ -119,13 +108,13 @@ export const AuthProvider = ({ children }) => {
     if (loginSuccess === 'success') {
       console.log('🎉 Login Success Signal Received!');
       
-      // Remove query params from URL
+      
       window.history.replaceState({}, document.title, window.location.pathname);
 
-      // Verify session immediately
+      
       checkAuthStatus();
 
-      // Redirect back to original page if needed
+      
       const redirectPath = localStorage.getItem('redirectAfterLogin');
       if (redirectPath && redirectPath !== '/') {
         window.location.href = redirectPath;

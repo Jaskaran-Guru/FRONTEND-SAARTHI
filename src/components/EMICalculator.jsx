@@ -53,7 +53,7 @@ const EMICalculator = ({ isOpen, onClose, propertyPrice = 0 }) => {
         </div>
 
         <div className="space-y-6">
-          {/* Property Price Display */}
+         
           {propertyPrice > 0 && (
             <div className="bg-blue-50 p-4 rounded-lg">
               <p className="text-sm text-blue-700 mb-1">Property Price</p>
@@ -61,7 +61,7 @@ const EMICalculator = ({ isOpen, onClose, propertyPrice = 0 }) => {
             </div>
           )}
 
-          {/* Loan Amount */}
+         
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Loan Amount (₹)
@@ -94,7 +94,7 @@ const EMICalculator = ({ isOpen, onClose, propertyPrice = 0 }) => {
             </div>
           </div>
 
-          {/* Interest Rate */}
+          
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Interest Rate (% per annum)
@@ -130,7 +130,7 @@ const EMICalculator = ({ isOpen, onClose, propertyPrice = 0 }) => {
             </div>
           </div>
 
-          {/* Loan Tenure */}
+         
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Loan Tenure (Years)
@@ -165,7 +165,7 @@ const EMICalculator = ({ isOpen, onClose, propertyPrice = 0 }) => {
             </div>
           </div>
 
-          {/* EMI Results */}
+          
           <div className="bg-gradient-to-br from-primary-50 to-green-50 p-6 rounded-xl border border-primary-100">
             <h4 className="font-bold text-gray-900 mb-4 text-center">💰 Loan Summary</h4>
             
@@ -186,7 +186,7 @@ const EMICalculator = ({ isOpen, onClose, propertyPrice = 0 }) => {
             </div>
           </div>
 
-          {/* Action Buttons */}
+          
           <div className="flex gap-4">
             <button
               onClick={onClose}

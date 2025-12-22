@@ -76,7 +76,7 @@ const AdvancedSearch = ({ onSearch, onReset }) => {
           </select>
         </div>
 
-        {/* Property Type */}
+       
         <select
           value={filters.propertyType}
           onChange={(e) => handleInputChange('propertyType', e.target.value)}
@@ -90,7 +90,7 @@ const AdvancedSearch = ({ onSearch, onReset }) => {
           <option value="commercial">Commercial</option>
         </select>
 
-        {/* BHK */}
+       
         <select
           value={filters.bhk}
           onChange={(e) => handleInputChange('bhk', e.target.value)}
@@ -104,7 +104,7 @@ const AdvancedSearch = ({ onSearch, onReset }) => {
           <option value="5">5+ BHK</option>
         </select>
 
-        {/* Budget */}
+        
         <select
           value={filters.priceRange}
           onChange={(e) => {
@@ -122,7 +122,7 @@ const AdvancedSearch = ({ onSearch, onReset }) => {
           <option value="500-">₹5Cr+</option>
         </select>
 
-        {/* Search Button */}
+        
         <button
           onClick={handleSearch}
           className="bg-primary-500 text-white px-6 py-3 rounded-lg hover:bg-primary-600 transition font-semibold flex items-center justify-center gap-2"
@@ -131,7 +131,7 @@ const AdvancedSearch = ({ onSearch, onReset }) => {
         </button>
       </div>
 
-      {/* Advanced Filters Toggle */}
+     
       <div className="flex justify-between items-center">
         <button
           onClick={() => setShowAdvanced(!showAdvanced)}
@@ -149,7 +149,7 @@ const AdvancedSearch = ({ onSearch, onReset }) => {
         </button>
       </div>
 
-      {/* Advanced Filters */}
+      
       {showAdvanced && (
         <div className="mt-6 space-y-6 border-t pt-6">
           {/* Price Range */}
@@ -176,7 +176,7 @@ const AdvancedSearch = ({ onSearch, onReset }) => {
             </div>
           </div>
 
-          {/* Additional Filters */}
+          
           <div className="grid md:grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Area (sq ft)</label>
@@ -223,7 +223,7 @@ const AdvancedSearch = ({ onSearch, onReset }) => {
             </div>
           </div>
 
-          {/* Amenities */}
+          
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-4">Amenities</label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
